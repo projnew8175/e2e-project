@@ -1,0 +1,22 @@
+{% extends "base.html" %}{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+<h2>Project Dashboard</h2><a class="btn btn-primary" href="/projects/new">+ Create Project</a>
+</div>
+<div class="row g-3 mb-4">
+<div class="col-md-3"><div class="card p-3"><div>Projects</div><div class="kpi">{{stats.projects}}</div></div></div>
+<div class="col-md-3"><div class="card p-3"><div>Open Actions</div><div class="kpi">{{stats.open_actions}}</div></div></div>
+<div class="col-md-3"><div class="card p-3"><div>Open Risks</div><div class="kpi">{{stats.open_risks}}</div></div></div>
+<div class="col-md-3"><div class="card p-3"><div>Total Order Value</div><div class="kpi">₹{{stats.order_value|money}}</div></div></div>
+</div>
+<div class="card p-4">
+<h5>Projects</h5>
+<table class="table table-hover align-middle">
+<thead><tr><th>Code</th><th>Project</th><th>Customer</th><th>Manager</th><th>Order Value</th><th>Status</th><th></th></tr></thead>
+<tbody>
+{% for p in projects %}
+<tr><td>{{p.project_code}}</td><td>{{p.project_name}}</td><td>{{p.customer}}</td><td>{{p.project_manager}}</td>
+<td>₹{{p.order_value|money}}</td><td><span class="badge bg-secondary status">{{p.status}}</span></td>
+<td><a class="btn btn-sm btn-outline-primary" href="/projects/{{p.id}}">View</a></td></tr>
+{% else %}<tr><td colspan="7" class="text-center text-muted">No projects yet.</td></tr>{% endfor %}
+</tbody></table></div>
+{% endblock %}

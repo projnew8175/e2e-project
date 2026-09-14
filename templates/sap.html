@@ -1,0 +1,12 @@
+{% extends "base.html" %}{% block content %}
+<h2>SAP VA01 / YPO2 Simulation</h2><p class="text-muted">Demo form only — no real SAP connection.</p>
+<div class="card p-4"><form method="post"><div class="row g-3">
+{% for label,name in [("Sold-To-Party","sold_to"),("Ship-To-Party","ship_to"),("PO Number","po_number"),("PO Date","po_date"),("Payment Terms","payment_terms"),("Incoterms","incoterms"),("Material Code","material"),("Quantity","quantity"),("WBS Element","wbs"),("Sales Employee","sales_employee"),("SE TC/PE","se_tcpe")] %}
+<div class="col-md-6"><label class="form-label">{{label}}</label><input name="{{name}}" class="form-control"></div>
+{% endfor %}
+<div class="col-12"><label class="form-label">Material Sales Text / Scope of Work</label><textarea name="scope" class="form-control" rows="3"></textarea></div>
+<div class="col-md-4"><label class="form-label">Planned Cost (EK02)</label><input name="planned_cost" type="number" step=".01" class="form-control"></div>
+<div class="col-md-4"><label class="form-label">Revenue (YPLP)</label><input name="revenue" type="number" step=".01" class="form-control"></div>
+<div class="col-md-4"><label class="form-label">Billing Plan</label><select name="billing" class="form-select"><option>IN-FULL (100%)</option><option>WITH DOWN PAYMENT</option><option>MILESTONE BILLING</option></select></div>
+</div><button class="btn btn-primary mt-4">Save Simulation Order</button></form></div>
+{% endblock %}

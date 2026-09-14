@@ -1,0 +1,21 @@
+{% extends "base.html" %}{% block content %}
+<div class="d-flex justify-content-between"><div><h2>{{p.project_name}}</h2><div class="text-muted">{{p.project_code}} · {{p.customer}}</div></div><span class="badge bg-primary h-25">{{p.status}}</span></div>
+<div class="row g-3 my-3">
+<div class="col-md-3"><div class="card p-3"><small>Order Value</small><div class="kpi">₹{{p.order_value|money}}</div></div></div>
+<div class="col-md-3"><div class="card p-3"><small>Planned Cost</small><div class="kpi">₹{{p.planned_cost|money}}</div></div></div>
+<div class="col-md-3"><div class="card p-3"><small>Gross Margin</small><div class="kpi">₹{{gm|money}}</div></div></div>
+<div class="col-md-3"><div class="card p-3"><small>% Completion</small><div class="kpi">{{"%.1f"|format(completion)}}%</div></div></div>
+</div>
+<div class="row g-4">
+<div class="col-lg-7">
+<div class="card p-4 mb-4"><h5>Financial Update</h5><form method="post" action="/projects/{{p.id}}/update"><div class="row g-3">
+<div class="col-md-4"><label>Actual Cost</label><input name="actual_cost" value="{{p.actual_cost}}" type="number" step=".01" class="form-control"></div>
+<div class="col-md-4"><label>Revenue Taken</label><input name="revenue_taken" value="{{p.revenue_taken}}" type="number" step=".01" class="form-control"></div>
+<div class="col-md-4"><label>Status</label><select name="status" class="form-select">{% for s in ['Setup','Released','Execution','Review','Closed'] %}<option {% if p.status==s %}selected{% endif %}>{{s}}</option>{% endfor %}</select></div>
+</div><button class="btn btn-success mt-3">Update</button></form></div>
+<div class="card p-4"><h5>Actions</h5><form method="post" action="/projects/{{p.id}}/action" class="row g-2 mb-3"><div class="col-md-5"><input name="action" class="form-control" placeholder="Action" required></div><div class="col-md-3"><input name="owner" class="form-control" placeholder="Owner"></div><div class="col-md-3"><input name="due_date" type="date" class="form-control"></div><div class="col-md-1"><button class="btn btn-primary">+</button></div></form>
+<ul class="list-group">{% for a in actions %}<li class="list-group-item d-flex justify-content-between">{{a.action}} <span>{{a.owner}} · {{a.status}}</span></li>{% else %}<li class="list-group-item text-muted">No actions.</li>{% endfor %}</ul></div>
+</div>
+<div class="col-lg-5"><div class="card p-4"><h5>Risk Log</h5><form method="post" action="/projects/{{p.id}}/risk"><input name="description" class="form-control mb-2" placeholder="Risk description" required><input name="owner" class="form-control mb-2" placeholder="Owner"><select name="severity" class="form-select mb-2"><option>Low</option><option selected>Medium</option><option>High</option><option>Critical</option></select><button class="btn btn-warning">Add Risk</button></form><hr>{% for r in risks %}<div class="border rounded p-2 mb-2"><b>{{r.severity}}</b> — {{r.description}}<br><small>{{r.owner}} · {{r.status}}</small></div>{% else %}<div class="text-muted">No risks logged.</div>{% endfor %}</div></div>
+</div>
+{% endblock %}

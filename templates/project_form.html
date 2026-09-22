@@ -1,6 +1,6 @@
 {% extends "base.html" %}{% block content %}
 <h2 class="mb-4">Create New Project</h2>
-<div class="card p-4"><form method="post">
+<div class="card p-4"><form method="post" enctype="multipart/form-data">
 <div class="row g-3">
 <div class="col-md-4"><label class="form-label">Project Code</label><input name="project_code" class="form-control" required placeholder="PRJ-1001"></div>
 <div class="col-md-8"><label class="form-label">Project Name</label><input name="project_name" class="form-control" required></div>
@@ -10,6 +10,7 @@
 <div class="col-md-6"><label class="form-label">Project Manager</label><input name="project_manager" class="form-control"></div>
 <div class="col-md-4"><label class="form-label">Order Value</label><input name="order_value" type="number" step="0.01" class="form-control"></div>
 <div class="col-md-4"><label class="form-label">Planned Cost</label><input name="planned_cost" type="number" step="0.01" class="form-control"></div>
+<div class="col-md-4"><label class="form-label">Document</label><input name="document" type="file" class="form-control" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.zip,.txt,.csv,.png,.jpg,.jpeg"></div>
 <div class="col-md-4"><label class="form-label">Status</label><select name="status" class="form-select"><option>Setup</option><option>Released</option><option>Execution</option><option>Review</option><option>Closed</option></select></div>
 </div><button class="btn btn-primary mt-4">Create Project</button></form></div>
 {% endblock %}

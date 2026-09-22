@@ -16,7 +16,13 @@
 {% for p in projects %}
 <tr><td>{{p.project_code}}</td><td>{{p.project_name}}</td><td>{{p.customer}}</td><td>{{p.project_manager}}</td>
 <td>₹{{p.order_value|money}}</td><td><span class="badge bg-secondary status">{{p.status}}</span></td>
-<td><a class="btn btn-sm btn-outline-primary" href="/projects/{{p.id}}">View</a></td></tr>
+<td>
+<a class="btn btn-sm btn-outline-primary" href="/projects/{{p.id}}">View</a>
+<form method="post" action="/projects/{{p.id}}/delete" class="d-inline"
+      onsubmit="return confirm('Are you sure you want to delete this project? This will also delete its actions and risks.');">
+<button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+</form>
+</td></tr>
 {% else %}<tr><td colspan="7" class="text-center text-muted">No projects yet.</td></tr>{% endfor %}
 </tbody></table></div>
 {% endblock %}

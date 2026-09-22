@@ -36,3 +36,5 @@ The SQLite database is created automatically as `e2e_project.db`.
 - SAP VA01/YPO2 simulation form
 
 This project does NOT connect to real SAP or SGV.
+
+- Project deletion with confirmation (also removes related actions and risks)

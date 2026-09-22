@@ -157,6 +157,25 @@ def project(pid):
     return render_template("project.html", p=p, actions=actions, risks=risks,
                            gm=gm, completion=completion, gm_taken=gm_taken)
 
+
+@app.post("/projects/<int:pid>/delete")
+def delete_project(pid):
+    """Delete a project and its related actions/risks."""
+    conn = get_db()
+    try:
+        # Delete child records first because foreign keys may be enforced.
+        conn.execute("DELETE FROM actions WHERE project_id=%s", (pid,))
+        conn.execute("DELETE FROM risks WHERE project_id=%s", (pid,))
+        conn.execute("DELETE FROM projects WHERE id=%s", (pid,))
+        conn.commit()
+        flash("Project deleted successfully.", "success")
+    except Exception as e:
+        conn.rollback()
+        flash(f"Could not delete project: {e}", "danger")
+    finally:
+        conn.close()
+    return redirect(url_for("dashboard"))
+
 @app.post("/projects/<int:pid>/update")
 def update_project(pid):
     d = request.form
